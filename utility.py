@@ -20,9 +20,7 @@ def minutes_to_timerange_str(m):
     minutes = m % 60
     return f"{hour:02d}:{minutes:02d}"
 
-def prettify_available_minutes():
-    l = [0, 1, 2, 60, 61, 62]
-    # group the list so that: [[0, 1, 2], [60, 61, 62]]
+def prettify_available_minutes(l: list):
     last = l[0] - 1
     result = []
     part = []
@@ -34,6 +32,10 @@ def prettify_available_minutes():
             part = [elem]
         last = elem
     result.append(part)
-    print(result)
-
-prettify_available_minutes()
+    time_ranges = []
+    for group in result:
+        start_time = minutes_to_timerange_str(group[0])
+        end_time = minutes_to_timerange_str(group[-1])
+        time_range_str = f"{start_time} - {end_time}"
+        time_ranges.append(time_range_str)
+    return time_ranges
